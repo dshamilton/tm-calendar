@@ -24,7 +24,7 @@ const getBackgroundColour = (): any  => {
 // Builds the size and position of a CalendarEvent
 const buildEventSize = (event: CalendarEvent): any => { 
    return { 
-     position: `${event.start}px`,
+     top: `${event.start}px`,
      height: `${event.end - event.start}px`,
    }
 };
