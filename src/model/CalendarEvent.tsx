@@ -5,6 +5,8 @@ export default class CalendarEvent {
         private end: number,
         private name: string
     ) {
-        
+       // No implementation yet
     }
+
+    // TODO: Consider implementing positional details here
 }

@@ -1,0 +1,7 @@
+.calendar { 
+  background-color: gray;
+  width: 90vh;
+  height: 90vw; 
+  border: 1px solid #000;
+  margin: 32px;
+}

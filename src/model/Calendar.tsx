@@ -6,16 +6,26 @@ interface InputEvent {
   name: string;
 }
 
-export class Calendar {
+export default class Calendar {
+  public events: CalendarEvent[];
   constructor(
-    private _events: CalendarEvent[]
+    private _events?: CalendarEvent[]
   ) { 
-    _events.push(new CalendarEvent(30, 90, "Event1"));
-    _events.push(new CalendarEvent(30, 90, "Event2"));
-    _events.push(new CalendarEvent(30, 90, "Event3"));
+    // Example events
+    _events = [];
+    _events.push(new CalendarEvent(30, 90, "Event-1"));
+    _events.push(new CalendarEvent(60, 150, "Event-2"));
+    _events.push(new CalendarEvent(120, 280, "Event-3"));
+    this.events = _events;
   }
 
-  createEvents(events: InputEvent[]): void { 
-    
+  createEvents(eventsInput: InputEvent[]): void { 
+    let calendarEvents = eventsInput.map((event, i) =>  
+      new CalendarEvent(event.start, event.end, `Event-${i}`)
+    );
+  }
+
+  getEvents() { 
+
   }
 }
