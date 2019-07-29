@@ -1,9 +1,9 @@
 export default class CalendarEvent {
 
     constructor(
-        private start: number,
-        private end: number,
-        private name: string
+        public start: number,
+        public end: number,
+        public name: string
     ) {
        // No implementation yet
     }

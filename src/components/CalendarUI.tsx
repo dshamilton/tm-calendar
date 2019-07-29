@@ -11,8 +11,9 @@ class CalendarUI extends React.Component {
       <div className="calendar">
         {
           /* Implement some kind of map to convery calendar events to DOM elements */
-          calendar.events.map((event) => <CalendarEventUI />)
-
+          calendar.events.map((event) =>
+            <CalendarEventUI event={event} />
+          )
         }
       </div>
     );
