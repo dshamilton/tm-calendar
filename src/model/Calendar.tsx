@@ -16,7 +16,12 @@ export default class Calendar {
     _events.push(new CalendarEvent(30, 90, "Event-1"));
     _events.push(new CalendarEvent(60, 150, "Event-2"));
     _events.push(new CalendarEvent(120, 280, "Event-3"));
+    _events.push(new CalendarEvent(300, 280, "Event-4"));
+
     this.events = _events;
+    this.events.forEach(event => this.detectCollisions(event));
+    // this.events.forEach(event => this.setEventPositions(event, calendarWidth;))
+    console.log("Events: ", this.events);
   }
 
   createEvents(eventsInput: InputEvent[]): void { 
@@ -25,7 +30,15 @@ export default class Calendar {
     );
   }
 
-  getEvents() { 
-
+  detectCollisions(currentEvent: CalendarEvent) {
+    this.events.forEach((event, i) => {
+      // Check the start date of a given task is colliding within another
+      if (
+        currentEvent.start > event.start && 
+        currentEvent.start < event.end
+      ) {
+        currentEvent.addCollision(event.name);
+      }
+    });
   }
 }
