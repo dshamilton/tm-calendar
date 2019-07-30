@@ -33,4 +33,8 @@ export default class CalendarEvent {
     console.log("getWidth");
     return this._width;
   }
+
+  getCollisions(): string[] { 
+    return this._collisions;
+  }
 }

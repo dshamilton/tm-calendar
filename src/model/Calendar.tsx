@@ -8,6 +8,7 @@ interface InputEvent {
 
 export default class Calendar {
   public events: CalendarEvent[];
+  private _collisionChain: string[] = [];
   constructor(
     private _events?: CalendarEvent[]
   ) { 
@@ -40,7 +41,19 @@ export default class Calendar {
         (currentEvent.start < event.start && currentEvent.end > event.end)
       ) {
         currentEvent.addCollision(event.name);
+        this._collisionChain.push(currentEvent.name);
+        this._collisionChain.push(event.name);
       }
     });
+    this._collisionChain = Array.from(new Set(this._collisionChain));
+    console.log("collision-chain: ", this._collisionChain);
+
+    // this.events.forEach(event => {
+    //   this.events.forEach(collisionEvent => {
+    //     if (collisionEvent.getCollisions().indexOf(event.name) > -1) {
+    //       this._collisionChain.push(collisionEvent.name);
+    //     }
+    //   });
+    // })
   }
 }
