@@ -3,10 +3,14 @@ import CalendarEvent from "../model/CalendarEvent";
 
 import './CalendarEventUI.css';
 import { isProperty } from '@babel/types';
+import { runInThisContext } from 'vm';
 
-interface CalendarProps {
-  event: CalendarEvent, // Change the required prop to an optional prop.
+export interface Props {
+  event: CalendarEvent,
+  width: number
  };
+
+ export interface State {}
 
 const randomColour = (): string => {
   let x = Math.floor(Math.random() * 256);
@@ -26,6 +30,7 @@ const buildEventSize = (event: CalendarEvent): any => {
    return { 
      top: `${event.start}px`,
      height: `${event.end - event.start}px`,
+     width:  `${event.getWidth()}px`
    }
 };
 
@@ -36,12 +41,20 @@ const buildEventUI = (event: CalendarEvent): React.CSSProperties => {
   }
 }
 
-const CalendarEventUI: React.SFC<CalendarProps> = (props) => {
-  return (
-    <div className="calendar-event" style={buildEventUI(props.event)}>
-      {props.event.name}
-    </div>
-  );
-};
+export class CalendarEventUI extends React.Component<Props, State>  {
+  constructor(props: any) {
+    super(props);
+    console.log("constructor");
+  }
+
+  render() {
+    return (
+      <div className="calendar-event" style={buildEventUI(this.props.event)}>
+        {this.props.event.name}
+        <div>{this.props.event.getWidth()}</div>
+      </div>
+    );
+  }
+}
 
 export default CalendarEventUI;

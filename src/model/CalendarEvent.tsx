@@ -1,3 +1,5 @@
+import { cpus } from "os";
+
 export default class CalendarEvent {
 
   private _collisions: string[] = [];
@@ -9,7 +11,6 @@ export default class CalendarEvent {
     public end: number,
     public name: string
   ) {
-
     // No implementation yet
   }
 
@@ -18,10 +19,18 @@ export default class CalendarEvent {
   }
 
   setPosition(calendarWidth: number) { 
-    let tempCollisions = this._collisions;
+    let tempCollisions = [...this._collisions];
     tempCollisions.push(this.name);
     tempCollisions.sort();
-    let postion = tempCollisions.indexOf(this.name);
-    console.log("POSITIONS: ", postion, calendarWidth);
+    this._position = tempCollisions.indexOf(this.name);
+    this._width = calendarWidth / tempCollisions.length;
+    // this._left = this._width  
+    console.log("temp-collisions: ", this.name, tempCollisions);
+    console.log("POSITIONS: ", this._position, calendarWidth, this._width);
+  }
+
+  getWidth(): number { 
+    console.log("getWidth");
+    return this._width;
   }
 }

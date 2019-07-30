@@ -5,16 +5,27 @@ import Calendar from "../model/Calendar";
 
 import './CalendarUI.css';
 
-class CalendarUI extends React.Component { 
-  private calendar = new Calendar();
-  render() {
+export interface CalendarUIState {
+  calendar: Calendar
+}
 
+class CalendarUI extends React.Component<{}, CalendarUIState> { 
+  private _calendar = new Calendar();
+  constructor(props: any) {
+    super(props);
+    this.state = { 
+      calendar: this._calendar
+    };
+  }
+
+  render() {
+    // const { calendar } = this.state;
     return (
       <div className="calendar">
         {
           /* Implement some kind of map to convery calendar events to DOM elements */
-          this.calendar.events.map((event) =>
-            <CalendarEventUI event={event} />
+          this.state.calendar.events.map((event) =>
+            <CalendarEventUI event={event} width={event.getWidth()} />
           )
         }
       </div>
@@ -23,13 +34,17 @@ class CalendarUI extends React.Component {
 
   componentDidMount() {
     // Using any because of findDOMNode union type
+    const { calendar } = this.state;
     let calendarDOMElement: any = ReactDOM.findDOMNode(this);
     this.setEventPositions(calendarDOMElement.clientWidth);
     console.log("Calendar: ", calendarDOMElement, calendarDOMElement.clientWidth);
+    console.log("calendar-events: ", calendar.events);
+    this.setState({calendar});
   }
 
   setEventPositions(calendarWidth: number) { 
-    this.calendar.events.forEach(event => event.setPosition(calendarWidth))
+    const { calendar } = this.state;
+    calendar.events.forEach(event => event.setPosition(calendarWidth));
   }
 }
 

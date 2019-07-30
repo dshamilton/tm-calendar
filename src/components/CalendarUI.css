@@ -4,6 +4,5 @@
   height: 90vh; 
   border: 1px solid #000;
   margin: 32px;
-  display: flex;
   position: relative; 
 }

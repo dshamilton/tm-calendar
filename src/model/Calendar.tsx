@@ -21,6 +21,7 @@ export default class Calendar {
     this.events = _events;
     this.events.forEach(event => this.detectCollisions(event));
     // this.events.forEach(event => this.setEventPositions(event, calendarWidth;))
+    
     console.log("Events: ", this.events);
   }
 
@@ -34,8 +35,9 @@ export default class Calendar {
     this.events.forEach((event, i) => {
       // Check the start date of a given task is colliding within another
       if (
-        currentEvent.start > event.start && 
-        currentEvent.start < event.end
+        (currentEvent.start > event.start && currentEvent.start < event.end) ||
+        (currentEvent.end > event.start && currentEvent.end < event.end) || 
+        (currentEvent.start < event.start && currentEvent.end > event.end)
       ) {
         currentEvent.addCollision(event.name);
       }
