@@ -5,6 +5,7 @@ import './CalendarEventUI.css';
 import { isProperty } from '@babel/types';
 import { runInThisContext } from 'vm';
 
+// Typescript props definition
 export interface Props {
   event: CalendarEvent,
   width: number
@@ -12,6 +13,7 @@ export interface Props {
 
  export interface State {}
 
+// Create random colours to easily identify components in the UI
 const randomColour = (): string => {
   let x = Math.floor(Math.random() * 256);
   let y = Math.floor(Math.random() * 256);
@@ -34,6 +36,7 @@ const buildEventSize = (event: CalendarEvent): any => {
    }
 };
 
+// Building the react style object in component props
 const buildEventUI = (event: CalendarEvent): React.CSSProperties => {
   return {
     ...getBackgroundColour(),
@@ -41,10 +44,11 @@ const buildEventUI = (event: CalendarEvent): React.CSSProperties => {
   }
 }
 
-export class CalendarEventUI extends React.Component<Props, State>  {
+export class CalendarEventUI extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    console.log("constructor");
+    // window.renderDay = this.createEvents || {};
+
   }
 
   render() {

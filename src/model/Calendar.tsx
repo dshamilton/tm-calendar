@@ -6,30 +6,22 @@ interface InputEvent {
   name: string;
 }
 
+declare global {
+  interface Window { renderDay: any; }
+}
+
+
 export default class Calendar {
-  public events: CalendarEvent[];
+  public events: CalendarEvent[] = [];
   private _collisionChain: string[] = [];
+
   constructor(
     private _events?: CalendarEvent[]
-  ) { 
-    // Example events
-    _events = [];
-    _events.push(new CalendarEvent(30, 90, "Event-1"));
-    _events.push(new CalendarEvent(60, 150, "Event-2"));
-    _events.push(new CalendarEvent(120, 280, "Event-3"));
-    _events.push(new CalendarEvent(300, 280, "Event-4"));
-
-    this.events = _events;
-    this.events.forEach(event => this.detectCollisions(event));
-    // this.events.forEach(event => this.setEventPositions(event, calendarWidth;))
+    ) { 
     
-    console.log("Events: ", this.events);
-  }
+    // Usnig bind(this) to transfer context
 
-  createEvents(eventsInput: InputEvent[]): void { 
-    let calendarEvents = eventsInput.map((event, i) =>  
-      new CalendarEvent(event.start, event.end, `Event-${i}`)
-    );
+    this.events.forEach(event => this.detectCollisions(event));
   }
 
   detectCollisions(currentEvent: CalendarEvent) {
@@ -40,20 +32,17 @@ export default class Calendar {
         (currentEvent.end > event.start && currentEvent.end < event.end) || 
         (currentEvent.start < event.start && currentEvent.end > event.end)
       ) {
+        // Add collisions for current event item to array
         currentEvent.addCollision(event.name);
+
+        // Build a collision chain to later position components that do not directly collide
+        // but form part of a chain of events that shouldn't overlap
         this._collisionChain.push(currentEvent.name);
         this._collisionChain.push(event.name);
       }
     });
+    // Reduce the array to unique elements after initial build
     this._collisionChain = Array.from(new Set(this._collisionChain));
     console.log("collision-chain: ", this._collisionChain);
-
-    // this.events.forEach(event => {
-    //   this.events.forEach(collisionEvent => {
-    //     if (collisionEvent.getCollisions().indexOf(event.name) > -1) {
-    //       this._collisionChain.push(collisionEvent.name);
-    //     }
-    //   });
-    // })
   }
 }
