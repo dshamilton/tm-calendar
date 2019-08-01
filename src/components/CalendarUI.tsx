@@ -22,6 +22,8 @@ class CalendarUI extends React.Component<{}, CalendarUIState> {
   private _eventIndex = 0;
   constructor(props: any) {
     super(props);
+    
+    // Using  bind(this) to transfer context
     window.renderDay = this.createEvents.bind(this) || {};
 
     this.state = { 
